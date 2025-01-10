@@ -24,12 +24,30 @@ def TSP_grafo_completo_vazio(numNodes: int) -> Graph:
 
     for u in range(0, grafoVazio.number_of_nodes()):
         for v in range(u+1, grafoVazio.number_of_nodes()):
-            grafoVazio.edges[u, v]['weight'] = 0
+            grafoVazio.edges[u, v]['weight'] = 1
     
     return grafoVazio
 
 def TSP_branch_and_Bound(grafo: Graph):
-    print("TSP_branch_and_Bound não implementado")
+    def estimativa() -> int:
+        est = 0
+        menor1 = 0
+        menor2 = 0
+        for u in range(0, grafo.number_of_nodes()):
+            vizinhos = grafo.neighbors(u)
+            for v in vizinhos:
+                aux = grafo.get_edge_data(u,v)['weight']
+                if(aux < menor1 or menor1 == 0):
+                    menor1 = aux
+                    continue
+
+                if(aux < menor2 or menor2 == 0):
+                    menor2 = aux
+                    continue
+            est += menor1 + menor2
+        return est/2
+    
+    est = estimativa()
     return
 
 def TSP_twice_around_the_tree():
@@ -40,5 +58,5 @@ def TSP_christofides():
     print("TSP_christofides não implementado")
     return
 
-grafoTeste = TSP_grafo_completo_vazio(10000)
-print(grafoTeste)
+grafoTeste = TSP_grafo_completo_vazio(100)
+TSP_branch_and_Bound(grafoTeste)
