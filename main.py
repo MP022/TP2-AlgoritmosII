@@ -76,6 +76,7 @@ def TSP_branch_and_Bound(grafo: Graph):
         fila.sort(key=lambda d: d['estimativa'], reverse=True)
         no = fila.pop()
         noAtual = no['caminho'][-1]
+        print(noAtual, fila.__len__())
 
         # Remove todas as arestas já consideradas na solução.
         grafoAux = Graph(grafo)
@@ -88,9 +89,9 @@ def TSP_branch_and_Bound(grafo: Graph):
         elif no['estimativa'] < melhorCusto:
             if no['caminho'].__len__() < quantN:
                 for k in range(1, quantN):
-                    if not(k in no['caminho']) and grafo[noAtual][k] != custoTotal+1 and estimativa(grafo) + no['custo'] < melhorCusto:
+                    if not(k in no['caminho']) and grafo[noAtual][k] != custoTotal+1 and estimativa(grafoAux) + no['custo'] < melhorCusto:
                         no['caminho'].append(k)
-                        fila.append({'estimativa': estimativa(grafo) + no['custo'], 'custo': no['custo'] + grafo[noAtual][k]['weight'], 'caminho': no['caminho'].copy()})
+                        fila.append({'estimativa': estimativa(grafoAux) + no['custo'], 'custo': no['custo'] + grafo[noAtual][k]['weight'], 'caminho': no['caminho'].copy()})
                         no['caminho'].remove(k)
             elif noAtual != 0 and grafo[0][noAtual] != custoTotal+1 and no['custo']+grafo[noAtual][0]['weight'] < melhorCusto and (set(grafo.nodes) & set(no['caminho'])) == set(grafo.nodes):
                 no['caminho'].append(0)
@@ -114,19 +115,48 @@ def TSP_christofides():
 #            (3, 4, dist(grafoTeste.nodes[3]['coord'], grafoTeste.nodes[4]['coord']))]
 # grafoTeste.add_weighted_edges_from(arestas)
 
-nos = [0, 1, 2, 3, 4]
-arestas = [(0, 1, 3), (0, 2, 1), (0, 3, 5), (0, 4, 8),
-           (1, 2, 5), (1, 3, 7), (1, 4, 9),
-           (2, 3, 4), (2, 4, 2),
-           (3, 4, 3)]
+# nos = [0, 1, 2, 3, 4]
+# arestas = [(0, 1, 3), (0, 2, 1), (0, 3, 5), (0, 4, 8),
+#            (1, 2, 5), (1, 3, 7), (1, 4, 9),
+#            (2, 3, 4), (2, 4, 2),
+#            (3, 4, 3)]
+# grafoTeste = Graph()
+# grafoTeste.add_nodes_from(nos)
+# grafoTeste.add_weighted_edges_from(arestas)
+
+# grafoTeste = TSP_grafo_completo_vazio(100)
+
+# abre o arquivo
+infile = open('./teste/berlin52.tsp', 'r')
+
+# le o cabeçalho
+linha = infile.readline().strip()
+while not linha.__contains__('NODE'):
+    print(linha)
+    linha = infile.readline().strip()
+
+#  le a lista de nos
+nos = []
+linha = infile.readline().strip()
+while linha != 'EOF':
+    x,y = linha.split()[1:]
+    nos.append((nos.__len__(), {'coord': (float(x), float(y))}))
+    linha = infile.readline().strip()
+
+# fecha o arquivo
+infile.close()
+
 grafoTeste = Graph()
 grafoTeste.add_nodes_from(nos)
+
+arestas = []
+for u in range(0, nos.__len__()):
+    for v in range(u+1, nos.__len__()):
+        arestas.append((u, v, dist(grafoTeste.nodes[u]['coord'], grafoTeste.nodes[v]['coord'])))
+
 grafoTeste.add_weighted_edges_from(arestas)
 
-grafoTeste = TSP_grafo_completo_vazio(100)
-
-
-print(grafoTeste)
+# print(grafoTeste)
 # print(grafoTeste.nodes)
 # print(grafoTeste.edges)
 print(TSP_branch_and_Bound(grafoTeste))
