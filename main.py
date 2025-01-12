@@ -1,7 +1,7 @@
 # Padrão: Anaconda 22.9 e/ou Python +3.9 com NumPy, SciPy e Pandas.
 # Bibliotecas: Networkx, iGraph.
 
-from math import sqrt
+from math import *
 import numpy
 import scipy
 import pandas
@@ -39,7 +39,41 @@ def custo_total(grafo) -> int:
 def dist(a: tuple, b: tuple) -> int:
     return sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1]))
 
+def insere_decres_list(list: list[dict[str, any]], item: any, valOrdem: str):
+        n = list.__len__()
+        iMax = n - 1
+        iMin = 0
+
+        # caso lista vazia
+        if iMax - iMin == -1:
+            list.insert(0, item)
+            return
+
+        while iMax - iMin > 1:
+            if list[floor((iMax-iMin)/2)+iMin][valOrdem] > item[valOrdem]:
+                iMax = floor((iMax-iMin)/2)+iMin
+            else:
+                iMin = floor((iMax-iMin)/2)+iMin
+
+        # caso lista com 1 item
+        if iMax - iMin < 1:
+            if list[iMin][valOrdem] < item[valOrdem]:
+                list.insert(1, item)
+            else:
+                list.insert(0, item)
+            return
+
+        # caso lista com mais de 1 item
+        if list[iMax][valOrdem] < item[valOrdem]:
+            list.insert(iMax + 1, item)
+        elif list[iMin][valOrdem] < item[valOrdem]:
+            list.insert(iMin + 1, item)
+        else:
+            list.insert(iMin, item)
+        return
+
 def TSP_branch_and_Bound(grafo: Graph):
+    # TODO: ALTERAR A ESTIMATIVA PRA TIRAR AS COPIAS DE GRAFOS E DIMINUIR O PROCESSAMENTOS DE __len__ OU QUALQUER OUTRA COISA QUE DER
     
     # custo total das arestas
     custoTotal = custo_total(grafo)
@@ -67,35 +101,48 @@ def TSP_branch_and_Bound(grafo: Graph):
     quantN = grafo.number_of_nodes()
 
     # (estimativa, custoAtual, caminhoAteAqui)
-    no = {'estimativa': estimativa(grafo), 'custo': 0, 'caminho': [0]}
+    no = {'estimativa': estimativa(grafo), 'profundidade': 1, 'custo': 0, 'caminho': [0]}
     fila = [no]
     melhorCusto = custoTotal+1
     caminho = []
     
     while fila.__len__() > 0:
-        fila.sort(key=lambda d: d['estimativa'], reverse=True)
-        no = fila.pop()
+        no = fila.__getitem__(0)
+        fila.remove(no)
         noAtual = no['caminho'][-1]
         print(noAtual, fila.__len__())
 
         # Remove todas as arestas já consideradas na solução.
-        grafoAux = Graph(grafo)
-        for i in range(1, no['caminho'].__len__()-1):
-            grafoAux.remove_node(i)
+        # grafoAux = Graph(grafo)
+        # for i in range(1, no['caminho'].__len__()-1):
+        #     grafoAux.remove_node(i)
 
-        if no['caminho'].__len__() > quantN and melhorCusto > no['custo']:
+        if no['profundidade'] > quantN and melhorCusto > no['custo']:
+
             melhorCusto = no['custo']
             caminho = no['caminho']
+
         elif no['estimativa'] < melhorCusto:
-            if no['caminho'].__len__() < quantN:
+
+            if no['profundidade'] < quantN:
+
+                est = estimativa(grafo) + no['custo']
+
                 for k in range(1, quantN):
-                    if not(k in no['caminho']) and grafo[noAtual][k] != custoTotal+1 and estimativa(grafoAux) + no['custo'] < melhorCusto:
+
+                    if not(k in no['caminho']) and grafo[noAtual][k] != custoTotal+1 and est < melhorCusto:
+
                         no['caminho'].append(k)
-                        fila.append({'estimativa': estimativa(grafoAux) + no['custo'], 'custo': no['custo'] + grafo[noAtual][k]['weight'], 'caminho': no['caminho'].copy()})
+                        item = {'estimativa': est, 'profundidade': no['profundidade']+1, 'custo': no['custo'] + grafo[noAtual][k]['weight'], 'caminho': no['caminho'].copy()}
                         no['caminho'].remove(k)
+                        insere_decres_list(fila, item, 'estimativa')
+
             elif noAtual != 0 and grafo[0][noAtual] != custoTotal+1 and no['custo']+grafo[noAtual][0]['weight'] < melhorCusto and (set(grafo.nodes) & set(no['caminho'])) == set(grafo.nodes):
+                
                 no['caminho'].append(0)
-                fila.append({'estimativa': no['custo']+grafo[noAtual][0]['weight'], 'custo': no['custo'] + grafo[noAtual][0]['weight'], 'caminho': no['caminho']})
+                item = {'estimativa': no['custo']+grafo[noAtual][0]['weight'], 'profundidade': no['profundidade']+1, 'custo': no['custo'] + grafo[noAtual][0]['weight'], 'caminho': no['caminho']}
+                insere_decres_list(fila, item, 'estimativa')
+
     return (caminho, melhorCusto)
  
 def TSP_twice_around_the_tree():
@@ -127,7 +174,8 @@ def TSP_christofides():
 # grafoTeste = TSP_grafo_completo_vazio(100)
 
 # abre o arquivo
-infile = open('./teste/berlin52.tsp', 'r')
+# infile = open('./teste/berlin52.tsp', 'r')
+infile = open('./teste/eil51.tsp', 'r')
 
 # le o cabeçalho
 linha = infile.readline().strip()
