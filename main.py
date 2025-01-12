@@ -113,9 +113,9 @@ def TSP_branch_and_Bound(grafo: Graph):
         print(noAtual, fila.__len__())
 
         # Remove todas as arestas já consideradas na solução.
-        # grafoAux = Graph(grafo)
-        # for i in range(1, no['caminho'].__len__()-1):
-        #     grafoAux.remove_node(i)
+        grafoAux = Graph(grafo)
+        for i in range(1, no['caminho'].__len__()-1):
+            grafoAux.remove_node(i)
 
         if no['profundidade'] > quantN and melhorCusto > no['custo']:
 
@@ -126,7 +126,7 @@ def TSP_branch_and_Bound(grafo: Graph):
 
             if no['profundidade'] < quantN:
 
-                est = estimativa(grafo) + no['custo']
+                est = estimativa(grafoAux) + no['custo']
 
                 for k in range(1, quantN):
 
