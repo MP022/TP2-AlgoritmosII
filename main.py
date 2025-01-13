@@ -1,12 +1,14 @@
 # Padrão: Anaconda 22.9 e/ou Python +3.9 com NumPy, SciPy e Pandas.
 # Bibliotecas: Networkx, iGraph.
 
+import os
 from math import *
 import numpy
 import scipy
 import pandas
 from networkx import *
 import igraph
+from timeout_decorator import timeout
 
 ## Preicsa implementar: ##
 # algoritmo branch-and-bound, 
@@ -16,18 +18,6 @@ import igraph
 
 # deverão avaliar o desempenho dos algoritmos segundo três aspectos: tempo, espaço, e qualidade da solução.
 # tempo de processamento deve ser limitado a 30min. dados referentes à execução colocados como NA (não-disponível).
-
-# Declara um grafo completo com numNodes nós e os campos que serão usados nos algoritmos
-def TSP_grafo_completo_vazio(numNodes: int) -> Graph:
-    grafoVazio: Graph = complete_graph(numNodes)
-    for n in range(0, grafoVazio.number_of_nodes()):
-        grafoVazio.nodes[n]['coord'] = (0,0)
-
-    for u in range(0, grafoVazio.number_of_nodes()):
-        for v in range(u+1, grafoVazio.number_of_nodes()):
-            grafoVazio.edges[u, v]['weight'] = 1
-    
-    return grafoVazio
 
 def custo_total(grafo) -> int:
     soma: int = 0
@@ -72,6 +62,7 @@ def insere_decres_list(list: list[dict[str, any]], item: any, valOrdem: str):
             list.insert(iMin, item)
         return
 
+@timeout(seconds=10)
 def TSP_branch_and_Bound(grafo: Graph):
     # TODO: ALTERAR A ESTIMATIVA PRA TIRAR AS COPIAS DE GRAFOS E DIMINUIR O PROCESSAMENTOS DE __len__ OU QUALQUER OUTRA COISA QUE DER
     
@@ -110,7 +101,7 @@ def TSP_branch_and_Bound(grafo: Graph):
         no = fila.__getitem__(0)
         fila.remove(no)
         noAtual = no['caminho'][-1]
-        print(noAtual, fila.__len__())
+        # print(no['caminho'], no['profundidade'], no['estimativa'], fila.__len__())
 
         # Remove todas as arestas já consideradas na solução.
         grafoAux = Graph(grafo)
@@ -143,68 +134,108 @@ def TSP_branch_and_Bound(grafo: Graph):
                 item = {'estimativa': no['custo']+grafo[noAtual][0]['weight'], 'profundidade': no['profundidade']+1, 'custo': no['custo'] + grafo[noAtual][0]['weight'], 'caminho': no['caminho']}
                 insere_decres_list(fila, item, 'estimativa')
 
-    return (caminho, melhorCusto)
+    return melhorCusto
  
-def TSP_twice_around_the_tree():
-    print("TSP_twice_around_the_tree não implementado")
-    return
+@timeout(seconds=1800)
+def TSP_twice_around_the_tree(grafo: Graph):
+    arvore: Graph = minimum_spanning_tree(grafo, algorithm="prim")
+    hamilton: list = list(dfs_preorder_nodes(arvore))
+    hamilton.append(hamilton[0])
+    melhorCusto = 0
 
-def TSP_christofides():
-    print("TSP_christofides não implementado")
-    return
+    for i in range(0, hamilton.__len__()-1):
+        melhorCusto += grafo[hamilton[i]][hamilton[i+1]]['weight']
 
-# nos = [(0, {'coord': (41,49)}), (1, {'coord': (35,17)}), (2, {'coord': (55,45)}), (3, {'coord': (55,20)}), (4, {'coord': (15,30)})]
-# grafoTeste = Graph()
-# grafoTeste.add_nodes_from(nos)
-# arestas = [(0, 1, dist(grafoTeste.nodes[0]['coord'], grafoTeste.nodes[1]['coord'])), (0, 2, dist(grafoTeste.nodes[0]['coord'], grafoTeste.nodes[2]['coord'])), (0, 3, dist(grafoTeste.nodes[0]['coord'], grafoTeste.nodes[3]['coord'])), (0, 4, dist(grafoTeste.nodes[0]['coord'], grafoTeste.nodes[4]['coord'])),
-#            (1, 2, dist(grafoTeste.nodes[1]['coord'], grafoTeste.nodes[2]['coord'])), (1, 3, dist(grafoTeste.nodes[1]['coord'], grafoTeste.nodes[3]['coord'])), (1, 4, dist(grafoTeste.nodes[1]['coord'], grafoTeste.nodes[4]['coord'])),
-#            (2, 3, dist(grafoTeste.nodes[2]['coord'], grafoTeste.nodes[3]['coord'])), (2, 4, dist(grafoTeste.nodes[2]['coord'], grafoTeste.nodes[4]['coord'])),
-#            (3, 4, dist(grafoTeste.nodes[3]['coord'], grafoTeste.nodes[4]['coord']))]
-# grafoTeste.add_weighted_edges_from(arestas)
+    return melhorCusto
 
-# nos = [0, 1, 2, 3, 4]
-# arestas = [(0, 1, 3), (0, 2, 1), (0, 3, 5), (0, 4, 8),
-#            (1, 2, 5), (1, 3, 7), (1, 4, 9),
-#            (2, 3, 4), (2, 4, 2),
-#            (3, 4, 3)]
-# grafoTeste = Graph()
-# grafoTeste.add_nodes_from(nos)
-# grafoTeste.add_weighted_edges_from(arestas)
+@timeout(seconds=1800)
+def TSP_christofides(grafo: Graph):
 
-# grafoTeste = TSP_grafo_completo_vazio(100)
+    def no_grau_impar(no: dict):
+        return arvore.degree()[no] % 2 == 1
 
-# abre o arquivo
-# infile = open('./teste/berlin52.tsp', 'r')
-infile = open('./teste/eil51.tsp', 'r')
+    arvore: Graph = minimum_spanning_tree(grafo, algorithm="prim")
+    I: Graph = Graph()
 
-# le o cabeçalho
-linha = infile.readline().strip()
-while not linha.__contains__('NODE'):
-    print(linha)
-    linha = infile.readline().strip()
+    nosImpares = []
+    for n in filter(no_grau_impar, arvore):
+        nosImpares.append(n)
 
-#  le a lista de nos
-nos = []
-linha = infile.readline().strip()
-while linha != 'EOF':
-    x,y = linha.split()[1:]
-    nos.append((nos.__len__(), {'coord': (float(x), float(y))}))
-    linha = infile.readline().strip()
+    # print(arvore.degree)
+    # print(nosImpares)
 
-# fecha o arquivo
-infile.close()
+    I.add_nodes_from(nosImpares)
 
-grafoTeste = Graph()
-grafoTeste.add_nodes_from(nos)
+    for u in nosImpares:
+        for v in grafo.neighbors(u):
+            if v in nosImpares:
+                I.add_edges_from([(u, v)])
+                I[u][v]['weight'] = dist(grafo.nodes[u]['coord'], grafo.nodes[v]['coord'])
 
-arestas = []
-for u in range(0, nos.__len__()):
-    for v in range(u+1, nos.__len__()):
-        arestas.append((u, v, dist(grafoTeste.nodes[u]['coord'], grafoTeste.nodes[v]['coord'])))
+    match = list(min_weight_matching(I))
+    # print(match)
+    for aresta in range(0, match.__len__()):
+        u, v = match[aresta]
+        match[aresta] = (u, v, {'weight': grafo[u][v]['weight']})
+    
+    gLinha = MultiGraph(arvore)
+    gLinha.add_edges_from(match)
+    sol = []
+    for n in eulerian_circuit(gLinha):
+        if not(n[0] in sol):
+            sol.append(n[0])
+    sol.append(sol[0])
 
-grafoTeste.add_weighted_edges_from(arestas)
+    melhorCusto = 0
+    for i in range(0, sol.__len__()-1):
+        melhorCusto += grafo[sol[i]][sol[i+1]]['weight']
 
-# print(grafoTeste)
-# print(grafoTeste.nodes)
-# print(grafoTeste.edges)
-print(TSP_branch_and_Bound(grafoTeste))
+    return melhorCusto
+
+def executa_teste(arquivo):
+    # abre o arquivo
+    infile = open(arquivo, 'r')
+
+    # le o cabeçalho
+    linha = infile.readline().strip().split()
+    nomeArqSaida = linha[-1]
+    while not linha.__contains__('NODE'):
+        print(linha)
+        linha = infile.readline().strip()
+
+    #  le a lista de nos
+    nos = []
+    linha = infile.readline().strip().split()
+    while linha != [] and linha[0] != 'EOF':
+        nos.append((nos.__len__(), {'coord': (float(linha[-2]), float(linha[-1]))}))
+        linha = infile.readline().strip().split()
+
+    # fecha o arquivo
+    infile.close()
+
+    grafoTeste = Graph()
+    grafoTeste.add_nodes_from(nos)
+
+    arestas = []
+    for u in range(0, nos.__len__()):
+        for v in range(u+1, nos.__len__()):
+            arestas.append((u, v, dist(grafoTeste.nodes[u]['coord'], grafoTeste.nodes[v]['coord'])))
+
+    grafoTeste.add_weighted_edges_from(arestas)
+
+    infile = open('./resultados/'+nomeArqSaida+'.txt', 'w')
+
+    infile.write(nomeArqSaida + ' ' + str(TSP_twice_around_the_tree(grafoTeste)))
+
+    infile.close()
+
+    # print(TSP_twice_around_the_tree(grafoTeste))
+    # print(TSP_christofides(grafoTeste))
+    # print(TSP_branch_and_Bound(grafoTeste))
+
+
+arquivosTeste = os.listdir('./teste/')
+print(arquivosTeste)
+
+for i in arquivosTeste:
+    executa_teste('./teste/'+i)

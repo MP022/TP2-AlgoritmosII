@@ -19,3 +19,4 @@ para entrar no venv
 >pip install pandas
 >pip install networkx
 >pip install igraph
+>pip install timeout-decorator
