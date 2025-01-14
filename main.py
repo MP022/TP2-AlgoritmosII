@@ -9,6 +9,7 @@ import pandas
 from networkx import *
 import igraph
 from timeout_decorator import timeout
+import time
 
 ## Preicsa implementar: ##
 # algoritmo branch-and-bound, 
@@ -62,7 +63,7 @@ def insere_decres_list(list: list[dict[str, any]], item: any, valOrdem: str):
             list.insert(iMin, item)
         return
 
-@timeout(seconds=10)
+@timeout(seconds=1800)
 def TSP_branch_and_Bound(grafo: Graph):
     # TODO: ALTERAR A ESTIMATIVA PRA TIRAR AS COPIAS DE GRAFOS E DIMINUIR O PROCESSAMENTOS DE __len__ OU QUALQUER OUTRA COISA QUE DER
     
@@ -197,11 +198,19 @@ def executa_teste(arquivo):
     infile = open(arquivo, 'r')
 
     # le o cabeçalho
-    linha = infile.readline().strip().split()
-    nomeArqSaida = linha[-1]
+    dimension = 8000
+    linha = infile.readline().strip()
+    nomeArqSaida = linha.split()[-1]
     while not linha.__contains__('NODE'):
         print(linha)
         linha = infile.readline().strip()
+        if linha.split()[0].__contains__('DIMENSION'):
+            dimension = linha.split()[-1]
+
+    if int(dimension) > 7000:
+        print("MEU COMPUTADOR NÂO RODA PQP")
+        infile.close()
+        return
 
     #  le a lista de nos
     nos = []
@@ -223,19 +232,104 @@ def executa_teste(arquivo):
 
     grafoTeste.add_weighted_edges_from(arestas)
 
+    tempoDeExecução = time.time()
+    try:
+        branchAndBound = TSP_branch_and_Bound(grafoTeste)
+    except:
+        branchAndBound = 'NA'
+    branchAndBound = 'Branch and bound:\nSolução: ' + str(branchAndBound) + '\nTempo: ' + str(time.time() - tempoDeExecução) + '\n\n'
+    print(branchAndBound)
+
+    tempoDeExecução = time.time()
+    try:
+        twiceAroundTheTree = TSP_twice_around_the_tree(grafoTeste)
+    except:
+        twiceAroundTheTree = 'NA'
+    twiceAroundTheTree = 'Twice around the tree:\nSolução: ' + str(twiceAroundTheTree) + '\nTempo: ' + str(time.time() - tempoDeExecução) + '\n\n'
+    print(twiceAroundTheTree)
+
+    tempoDeExecução = time.time()
+    try:
+        christofides = TSP_twice_around_the_tree(grafoTeste)
+    except:
+        christofides = 'NA'
+    christofides = 'Christofides:\nSolução: ' + str(christofides) + '\nTempo: ' + str(time.time() - tempoDeExecução) + '\n'
+    print(christofides)
+    
+
+
     infile = open('./resultados/'+nomeArqSaida+'.txt', 'w')
 
-    infile.write(nomeArqSaida + ' ' + str(TSP_twice_around_the_tree(grafoTeste)))
+    infile.write(nomeArqSaida + ' -- \n\n' + branchAndBound + twiceAroundTheTree + christofides)
 
     infile.close()
 
-    # print(TSP_twice_around_the_tree(grafoTeste))
-    # print(TSP_christofides(grafoTeste))
-    # print(TSP_branch_and_Bound(grafoTeste))
+def gera_resultados_por_algoritmo():
+    try:
+        arquivosResultados.remove('branchAndBound.txt')
+    except:
+        not True
+    try:
+        arquivosResultados.remove('twiceAroundTheTree.txt')
+    except:
+        not True
+    try:
+        arquivosResultados.remove('christofides.txt')
+    except:
+        not True
+    # print(arquivosResultados.__len__())
+    branchAndBound = ''
+    twiceAroundTheTree = ''
+    christofides = ''
+    for i in arquivosResultados:
+        infile = open('./resultados/' + i, 'r')
+        linha = infile.readline().strip()
+        branchAndBound += linha + "\n"
+        twiceAroundTheTree += linha + "\n"
+        christofides += linha + "\n"
+        infile.readline().strip()
+        infile.readline().strip()
+        linha = infile.readline().strip()
+        branchAndBound += linha + "\n"
+        linha = infile.readline().strip()
+        branchAndBound += linha + "\n\n"
+        infile.readline().strip()
+        infile.readline().strip()
+        linha = infile.readline().strip()
+        twiceAroundTheTree += linha + "\n"
+        linha = infile.readline().strip()
+        twiceAroundTheTree += linha + "\n\n"
+        infile.readline().strip()
+        infile.readline().strip()
+        linha = infile.readline().strip()
+        christofides += linha + "\n"
+        linha = infile.readline().strip()
+        christofides += linha + "\n\n"
 
+
+    infile = open('./resultados/branchAndBound.txt', 'w')
+
+    infile.write(branchAndBound)
+
+    infile.close()
+
+    infile = open('./resultados/twiceAroundTheTree.txt', 'w')
+
+    infile.write(twiceAroundTheTree)
+
+    infile.close()
+
+    infile = open('./resultados/christofides.txt', 'w')
+
+    infile.write(christofides)
+
+    infile.close()
 
 arquivosTeste = os.listdir('./teste/')
-print(arquivosTeste)
-
 for i in arquivosTeste:
     executa_teste('./teste/'+i)
+
+arquivosResultados = os.listdir('./resultados/')
+gera_resultados_por_algoritmo()
+
+# TODO: Gera graficos a partir dos dados de teste
