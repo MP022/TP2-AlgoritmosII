@@ -1,0 +1,13 @@
+a280 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.3709700107574
+
+Twice around the tree:
+Solução: 3751.3988440001685
+Tempo: 0.033367156982421875
+
+Christofides:
+Solução: 2944.242991960713
+Tempo: 0.39127516746520996

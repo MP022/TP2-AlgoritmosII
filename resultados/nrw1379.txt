@@ -1,0 +1,13 @@
+nrw1379 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.4652643203735
+
+Twice around the tree:
+Solução: 79156.2650653691
+Tempo: 1.8524861335754395
+
+Christofides:
+Solução: 63850.383022415976
+Tempo: 104.7340579032898

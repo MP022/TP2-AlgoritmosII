@@ -1,0 +1,13 @@
+pcb1173 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.3995854854584
+
+Twice around the tree:
+Solução: 80728.18863419454
+Tempo: 1.0206146240234375
+
+Christofides:
+Solução: 63137.38404153112
+Tempo: 29.684037446975708

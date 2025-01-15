@@ -1,0 +1,13 @@
+u159 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.5472786426544
+
+Twice around the tree:
+Solução: 58292.50842435215
+Tempo: 0.010045051574707031
+
+Christofides:
+Solução: 47635.05138718131
+Tempo: 0.10478425025939941

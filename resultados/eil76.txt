@@ -1,0 +1,13 @@
+eil76 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.6638774871826
+
+Twice around the tree:
+Solução: 703.6351597441984
+Tempo: 0.002801179885864258
+
+Christofides:
+Solução: 618.0474862158942
+Tempo: 0.03278613090515137

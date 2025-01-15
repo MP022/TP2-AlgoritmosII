@@ -1,0 +1,13 @@
+lin318 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.360191822052
+
+Twice around the tree:
+Solução: 59334.954404748154
+Tempo: 0.04237961769104004
+
+Christofides:
+Solução: 48754.4554882387
+Tempo: 0.6005892753601074

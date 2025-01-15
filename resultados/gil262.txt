@@ -1,0 +1,13 @@
+gil262 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.388324022293
+
+Twice around the tree:
+Solução: 3358.1541767582894
+Tempo: 0.03282976150512695
+
+Christofides:
+Solução: 2718.969639506146
+Tempo: 0.5414624214172363
