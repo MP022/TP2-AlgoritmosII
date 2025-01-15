@@ -20,3 +20,10 @@ para entrar no venv
 >pip install networkx
 >pip install igraph
 >pip install timeout-decorator
+
+## Compilando o relatório
+
+Para compilar o relátorio de forma automaica é preciso ter a extenção LaTeX Workshop instalado e executar os comandos
+
+>sudo apt install latexmk
+>sudo apt install texlive-formats-extra
