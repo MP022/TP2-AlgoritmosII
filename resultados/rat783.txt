@@ -1,0 +1,13 @@
+rat783 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.2840237617493
+
+Twice around the tree:
+Solução: 12067.602998246572
+Tempo: 0.2563350200653076
+
+Christofides:
+Solução: 10109.74499446148
+Tempo: 14.698363304138184

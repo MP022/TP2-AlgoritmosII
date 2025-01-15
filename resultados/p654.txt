@@ -1,0 +1,13 @@
+p654 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.2639453411102
+
+Twice around the tree:
+Solução: 49620.105877079084
+Tempo: 0.20683979988098145
+
+Christofides:
+Solução: 39298.29443925391
+Tempo: 0.8451511859893799

@@ -208,7 +208,7 @@ def executa_teste(arquivo):
             dimension = linha.split()[-1]
 
     if int(dimension) > 7000:
-        print("MEU COMPUTADOR NÂO RODA PQP")
+        print("\n\nMEU COMPUTADOR NÂO RODA\n\n")
         infile.close()
         return
 
@@ -250,7 +250,7 @@ def executa_teste(arquivo):
 
     tempoDeExecução = time.time()
     try:
-        christofides = TSP_twice_around_the_tree(grafoTeste)
+        christofides = TSP_christofides(grafoTeste)
     except:
         christofides = 'NA'
     christofides = 'Christofides:\nSolução: ' + str(christofides) + '\nTempo: ' + str(time.time() - tempoDeExecução) + '\n'
@@ -325,11 +325,16 @@ def gera_resultados_por_algoritmo():
 
     infile.close()
 
-arquivosTeste = os.listdir('./teste/')
+arquivosTeste = os.listdir('./teste/').sort()
+
+# Retira teste que já foram executados
+arquivosResultados = os.listdir('./resultados/')
+for i in arquivosResultados:
+    if (i.split('.')[0]+'.tsp') in arquivosTeste: arquivosTeste.remove(i.split('.')[0]+'.tsp')
+
 for i in arquivosTeste:
     executa_teste('./teste/'+i)
 
-arquivosResultados = os.listdir('./resultados/')
 gera_resultados_por_algoritmo()
 
 # TODO: Gera graficos a partir dos dados de teste

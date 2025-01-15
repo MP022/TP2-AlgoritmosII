@@ -1,0 +1,13 @@
+fnl4461 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1802.084305524826
+
+Twice around the tree:
+Solução: 254728.16219664202
+Tempo: 29.97539448738098
+
+Christofides:
+Solução: NA
+Tempo: 1800.0001301765442

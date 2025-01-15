@@ -1,0 +1,13 @@
+pr264 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.3843607902527
+
+Twice around the tree:
+Solução: 70613.7888411385
+Tempo: 0.03659510612487793
+
+Christofides:
+Solução: 54750.37832450371
+Tempo: 0.1991426944732666

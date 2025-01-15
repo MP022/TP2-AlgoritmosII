@@ -1,0 +1,13 @@
+berlin52 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.8884010314941
+
+Twice around the tree:
+Solução: 10116.014495510826
+Tempo: 0.0013897418975830078
+
+Christofides:
+Solução: 8642.33123506497
+Tempo: 0.009277820587158203

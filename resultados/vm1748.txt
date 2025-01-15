@@ -1,0 +1,13 @@
+vm1748 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.3620052337646
+
+Twice around the tree:
+Solução: 445935.551642111
+Tempo: 3.6660726070404053
+
+Christofides:
+Solução: 376410.5082718295
+Tempo: 60.66983652114868

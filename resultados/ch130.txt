@@ -1,0 +1,13 @@
+ch130 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.5734856128693
+
+Twice around the tree:
+Solução: 8128.757281130948
+Tempo: 0.007278919219970703
+
+Christofides:
+Solução: 6752.275865213126
+Tempo: 0.06635570526123047
