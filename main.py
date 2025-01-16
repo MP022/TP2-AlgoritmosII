@@ -20,13 +20,6 @@ import time
 # deverão avaliar o desempenho dos algoritmos segundo três aspectos: tempo, espaço, e qualidade da solução.
 # tempo de processamento deve ser limitado a 30min. dados referentes à execução colocados como NA (não-disponível).
 
-def custo_total(grafo) -> int:
-    soma: int = 0
-    for u in range(0, grafo.number_of_nodes()):
-        for v in grafo.neighbors(u):
-            soma += grafo.get_edge_data(u,v)['weight']
-    return soma/2
-
 def dist(a: tuple, b: tuple) -> int:
     return sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1]))
 
@@ -66,11 +59,7 @@ def insere_decres_list(list: list[dict[str, any]], item: any, valOrdem: str):
 @timeout(seconds=1800)
 def TSP_branch_and_Bound(grafo: Graph):
     # TODO: ALTERAR A ESTIMATIVA PRA TIRAR AS COPIAS DE GRAFOS E DIMINUIR O PROCESSAMENTOS DE __len__ OU QUALQUER OUTRA COISA QUE DER
-    
-    # custo total das arestas
-    custoTotal = custo_total(grafo)
-
-    def estimativa(grafoEst: Graph) -> int:
+    def estimativa(grafoEst: Graph, caminho: list) -> int:
         est: int = 0
         menor1 = menor2 = 0
         for u in grafoEst.nodes:
@@ -85,6 +74,16 @@ def TSP_branch_and_Bound(grafo: Graph):
                 if(aux < menor2 or menor2 == 0):
                     menor2 = aux
                     continue
+
+            if u in caminho and caminho.__len__() > 1:
+                ind: int = caminho.index(u)
+                if ind == 0:
+                    menor2 = grafoEst.get_edge_data(u,caminho[ind+1])['weight']
+                elif ind == caminho.__len__()-1:
+                    menor2 = grafoEst.get_edge_data(u,caminho[ind-1])['weight']
+                else:
+                    menor1 = grafoEst.get_edge_data(u,caminho[ind-1])['weight']
+                    menor2 = grafoEst.get_edge_data(u,caminho[ind+1])['weight']
             est += menor1 + menor2
             menor1 = 0
             menor2 = 0
@@ -92,8 +91,14 @@ def TSP_branch_and_Bound(grafo: Graph):
 
     quantN = grafo.number_of_nodes()
 
-    # (estimativa, custoAtual, caminhoAteAqui)
-    no = {'estimativa': estimativa(grafo), 'profundidade': 1, 'custo': 0, 'caminho': [0]}
+    # custo total das arestas
+    custoTotal: int = 0
+    for u in range(0, grafo.number_of_nodes()):
+        for v in grafo.neighbors(u):
+            custoTotal += grafo.get_edge_data(u,v)['weight']
+    custoTotal = custoTotal/2
+
+    no = {'estimativa': estimativa(grafo, [0]), 'profundidade': 1, 'custo': 0, 'caminho': [0]}
     fila = [no]
     melhorCusto = custoTotal+1
     caminho = []
@@ -102,12 +107,6 @@ def TSP_branch_and_Bound(grafo: Graph):
         no = fila.__getitem__(0)
         fila.remove(no)
         noAtual = no['caminho'][-1]
-        # print(no['caminho'], no['profundidade'], no['estimativa'], fila.__len__())
-
-        # Remove todas as arestas já consideradas na solução.
-        grafoAux = Graph(grafo)
-        for i in range(1, no['caminho'].__len__()-1):
-            grafoAux.remove_node(i)
 
         if no['profundidade'] > quantN and melhorCusto > no['custo']:
 
@@ -118,16 +117,20 @@ def TSP_branch_and_Bound(grafo: Graph):
 
             if no['profundidade'] < quantN:
 
-                est = estimativa(grafoAux) + no['custo']
-
                 for k in range(1, quantN):
 
-                    if not(k in no['caminho']) and grafo[noAtual][k] != custoTotal+1 and est < melhorCusto:
-
+                    if not(k in no['caminho']):
                         no['caminho'].append(k)
+                        est = estimativa(grafo, no['caminho'])
+                    else:
+                        continue
+
+                    if grafo[noAtual][k] != custoTotal+1 and est < melhorCusto:
+
                         item = {'estimativa': est, 'profundidade': no['profundidade']+1, 'custo': no['custo'] + grafo[noAtual][k]['weight'], 'caminho': no['caminho'].copy()}
-                        no['caminho'].remove(k)
                         insere_decres_list(fila, item, 'estimativa')
+
+                    no['caminho'].remove(k)
 
             elif noAtual != 0 and grafo[0][noAtual] != custoTotal+1 and no['custo']+grafo[noAtual][0]['weight'] < melhorCusto and (set(grafo.nodes) & set(no['caminho'])) == set(grafo.nodes):
                 
@@ -140,10 +143,16 @@ def TSP_branch_and_Bound(grafo: Graph):
 @timeout(seconds=1800)
 def TSP_twice_around_the_tree(grafo: Graph):
     arvore: Graph = minimum_spanning_tree(grafo, algorithm="prim")
-    hamilton: list = list(dfs_preorder_nodes(arvore))
+    
+    dfs: list = list(dfs_preorder_nodes(arvore))
+    
+    hamilton = []
+    for n in dfs:
+        if not(n in hamilton):
+            hamilton.append(n)
     hamilton.append(hamilton[0])
-    melhorCusto = 0
 
+    melhorCusto = 0
     for i in range(0, hamilton.__len__()-1):
         melhorCusto += grafo[hamilton[i]][hamilton[i+1]]['weight']
 
