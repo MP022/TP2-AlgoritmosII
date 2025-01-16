@@ -3,11 +3,8 @@
 
 import os
 from math import *
-import numpy
-import scipy
 import pandas
 from networkx import *
-import igraph
 from timeout_decorator import timeout
 import time
 
@@ -269,7 +266,7 @@ def executa_teste(arquivo):
 
     infile = open('./resultados/'+nomeArqSaida+'.txt', 'w')
 
-    infile.write(nomeArqSaida + ' -- \n\n' + branchAndBound + twiceAroundTheTree + christofides)
+    infile.write(nomeArqSaida + ' -- ' + dimension + '\n\n' + branchAndBound + twiceAroundTheTree + christofides)
 
     infile.close()
 
@@ -286,7 +283,7 @@ def gera_resultados_por_algoritmo():
         arquivosResultados.remove('christofides.txt')
     except:
         not True
-    # print(arquivosResultados.__len__())
+
     branchAndBound = ''
     twiceAroundTheTree = ''
     christofides = ''
@@ -334,7 +331,8 @@ def gera_resultados_por_algoritmo():
 
     infile.close()
 
-arquivosTeste = os.listdir('./teste/').sort()
+arquivosTeste = os.listdir('./teste/')
+arquivosTeste.sort()
 
 # Retira teste que já foram executados
 arquivosResultados = os.listdir('./resultados/')
@@ -347,3 +345,39 @@ for i in arquivosTeste:
 gera_resultados_por_algoritmo()
 
 # TODO: Gera graficos a partir dos dados de teste
+arquivosResultados = os.listdir('./a/')
+if not('branchAndBound.txt' in arquivosResultados) or not('twiceAroundTheTree.txt' in arquivosResultados) or not('christofides.txt' in arquivosResultados):
+    print("Resultados por algoritmos não foram gerados.")
+    exit()
+
+infile = open('./a/branchAndBound.txt', 'r')
+branchAndBoundFile = infile.readlines()
+infile.close()
+infile = open('./a/twiceAroundTheTree.txt', 'r')
+twiceAroundTheTreeFile = infile.readlines()
+infile.close()
+infile = open('./a/christofides.txt', 'r')
+christofidesFile = infile.readlines()
+infile.close()
+
+branchAndBoundDictTempo = {}
+for n in range(0, int(branchAndBoundFile.__len__()/4)):
+    branchAndBoundDictTempo[branchAndBoundFile[n*4][:-4]] = float(branchAndBoundFile[(n*4)+2].split(' ')[1][:-1])
+
+twiceAroundTheTreeDictTempo = {}
+for n in range(0, int(twiceAroundTheTreeFile.__len__()/4)):
+    twiceAroundTheTreeDictTempo[twiceAroundTheTreeFile[n*4][:-4]] = float(twiceAroundTheTreeFile[(n*4)+2].split(' ')[1][:-1])
+
+christofidesDictTempo = {}
+for n in range(0, int(christofidesFile.__len__()/4)):
+    christofidesDictTempo[christofidesFile[n*4][:-4]] = float(christofidesFile[(n*4)+2].split(' ')[1][:-1])
+
+# print(branchAndBoundDictTempo)
+# print(twiceAroundTheTreeDictTempo)
+# print(christofidesDictTempo)
+
+df = pandas.DataFrame({"twiceAroundTheTree": twiceAroundTheTreeDictTempo, "christofides": christofidesDictTempo})
+
+fig = df.plot(kind='line', figsize=(5, 3), fontsize=5).get_figure()
+fig.savefig('./a/test.pdf')
+
