@@ -2,12 +2,12 @@ kroB200 --
 
 Branch and bound:
 Solução: NA
-Tempo: 0.09356021881103516
+Tempo: 1800.3909759521484375e-06
 
 Twice around the tree:
 Solução: 40710.95987899587
-Tempo: 0.036966562271118164
+Tempo: 0.020284175872802734
 
 Christofides:
-Solução: NA
-Tempo: 0.09729838371276855
+Solução: 33118.12196028457
+Tempo: 0.32994842529296875
