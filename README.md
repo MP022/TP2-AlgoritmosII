@@ -15,11 +15,10 @@ para entrar no venv
 
 ## Instalando as bibliotecas (dentro do venv)
 
->pip install scipy
 >pip install pandas
 >pip install networkx
->pip install igraph
 >pip install timeout-decorator
+>pip install matplotlib
 
 ## Compilando o relatório
 
