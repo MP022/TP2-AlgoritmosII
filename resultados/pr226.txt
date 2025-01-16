@@ -1,4 +1,4 @@
-pr226 -- 
+pr226 -- 226
 
 Branch and bound:
 Solução: NA

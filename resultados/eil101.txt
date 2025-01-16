@@ -1,4 +1,4 @@
-eil101 -- 
+eil101 -- 101
 
 Branch and bound:
 Solução: NA

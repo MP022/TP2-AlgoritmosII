@@ -1,4 +1,4 @@
-u574 -- 
+u574 -- 574
 
 Branch and bound:
 Solução: NA

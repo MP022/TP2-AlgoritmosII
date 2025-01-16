@@ -1,4 +1,4 @@
-fl1577 -- 
+fl1577 -- 1577
 
 Branch and bound:
 Solução: NA

@@ -1,4 +1,4 @@
-pr76 -- 
+pr76 -- 76
 
 Branch and bound:
 Solução: NA

@@ -146,143 +146,143 @@ fl3795 -- 3795
 Solução: NA
 Tempo: 1802.273017168045
 
-u159 --
+u159 -- 159
 Solução: NA
 Tempo: 1800.5472786426544
 
-berlin52 --
+berlin52 -- 52
 Solução: NA
 Tempo: 1800.8884010314941
 
-tsp225 --
+tsp225 -- 225
 Solução: NA
 Tempo: 1800.403395652771
 
-pr299 --
+pr299 -- 299
 Solução: NA
 Tempo: 1800.3543252944946
 
-pr124 --
+pr124 -- 124
 Solução: NA
 Tempo: 1800.560783624649
 
-kroB200 --
+kroB200 -- 200
 Solução: NA
 Tempo: 1800.3909759521484375e-06
 
-pr2392 --
+pr2392 -- 2392
 Solução: NA
 Tempo: 1800.584834575653
 
-u2152 --
+u2152 -- 2152
 Solução: NA
 Tempo: 1800.8414459228516
 
-pr76 --
+pr76 -- 76
 Solução: NA
 Tempo: 1800.7086174488068
 
-u2319 --
+u2319 -- 2319
 Solução: NA
 Tempo: 1800.9813969135284
 
-ch130 --
+ch130 -- 130
 Solução: NA
 Tempo: 1800.5734856128693
 
-pr1002 --
+pr1002 -- 1002
 Solução: NA
 Tempo: 1800.3071377277374
 
-st70 --
+st70 -- 70
 Solução: NA
 Tempo: 1800.658989906311
 
-pcb3038 --
+pcb3038 -- 3038
 Solução: NA
 Tempo: 1801.770263671875
 
-pr226 --
+pr226 -- 226
 Solução: NA
 Tempo: 1800.403461933136
 
-lin318 --
+lin318 -- 318
 Solução: NA
 Tempo: 1800.3526210784912
 
-d1291 --
+d1291 -- 1291
 Solução: NA
 Tempo: 1800.2709467411041
 
-d493 --
+d493 -- 493
 Solução: NA
 Tempo: 1800.3006172180176
 
-kroD100 --
+kroD100 -- 100
 Solução: NA
 Tempo: 1800.6240227222443
 
-gil262 --
+gil262 -- 262
 Solução: NA
 Tempo: 1800.388324022293
 
-rat575 --
+rat575 -- 575
 Solução: NA
 Tempo: 1800.284075975418
 
-kroC100 --
+kroC100 -- 100
 Solução: NA
 Tempo: 1800.6417891979218
 
-d657 --
+d657 -- 657
 Solução: NA
 Tempo: 1800.2678747177124
 
-rd100 --
+rd100 -- 100
 Solução: NA
 Tempo: 1800.627784729004
 
-eil101 --
+eil101 -- 101
 Solução: NA
 Tempo: 1800.106231689453125e-06
 
-rl1304 --
+rl1304 -- 1304
 Solução: NA
 Tempo: 1800.3573310375214
 
-kroB150 --
+kroB150 -- 150
 Solução: NA
 Tempo: 1800.5374119281769
 
-rat783 --
+rat783 -- 783
 Solução: NA
 Tempo: 1800.2840237617493
 
-fl417 --
+fl417 -- 417
 Solução: NA
 Tempo: 1800.3041999340057
 
-u1060 --
+u1060 -- 1060
 Solução: NA
 Tempo: 1800.3133368492126
 
-u1817 --
+u1817 -- 1817
 Solução: NA
 Tempo: 1800.3687608242035
 
-pcb1173 --
+pcb1173 -- 1173
 Solução: NA
 Tempo: 1800.3995854854584
 
-d1655 --
+d1655 -- 1655
 Solução: NA
 Tempo: 1800.3342168331146
 
-eil76 --
+eil76 -- 76
 Solução: NA
 Tempo: 1800.6638774871826
 
-rd400 --
+rd400 -- 400
 Solução: NA
 Tempo: 1800.3219351768494
 

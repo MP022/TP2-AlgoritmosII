@@ -1,4 +1,4 @@
-nrw1379 -- 
+nrw1379 -- 1379
 
 Branch and bound:
 Solução: NA

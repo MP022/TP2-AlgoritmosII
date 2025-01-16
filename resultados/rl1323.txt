@@ -1,4 +1,4 @@
-rl1323 -- 
+rl1323 -- 1323
 
 Branch and bound:
 Solução: NA

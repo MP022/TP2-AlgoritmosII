@@ -1,4 +1,4 @@
-u1060 -- 
+u1060 -- 1060
 
 Branch and bound:
 Solução: NA

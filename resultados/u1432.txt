@@ -1,4 +1,4 @@
-u1432 -- 
+u1432 -- 1432
 
 Branch and bound:
 Solução: NA

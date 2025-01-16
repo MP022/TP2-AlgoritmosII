@@ -1,4 +1,4 @@
-rat195 -- 
+rat195 -- 195
 
 Branch and bound:
 Solução: NA

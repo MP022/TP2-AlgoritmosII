@@ -1,4 +1,4 @@
-eil76 -- 
+eil76 -- 76
 
 Branch and bound:
 Solução: NA

@@ -1,4 +1,4 @@
-u724 -- 
+u724 -- 724
 
 Branch and bound:
 Solução: NA

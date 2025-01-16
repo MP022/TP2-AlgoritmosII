@@ -1,4 +1,4 @@
-pr144 -- 
+pr144 -- 144
 
 Branch and bound:
 Solução: NA

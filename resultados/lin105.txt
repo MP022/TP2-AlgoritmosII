@@ -1,4 +1,4 @@
-lin105 -- 
+lin105 -- 105
 
 Branch and bound:
 Solução: NA

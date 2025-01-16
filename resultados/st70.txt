@@ -1,4 +1,4 @@
-st70 -- 
+st70 -- 70
 
 Branch and bound:
 Solução: NA

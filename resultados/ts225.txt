@@ -1,4 +1,4 @@
-ts225 -- 
+ts225 -- 225
 
 Branch and bound:
 Solução: NA

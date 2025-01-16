@@ -1,4 +1,4 @@
-rl5934 -- 
+rl5934 -- 5934
 
 Branch and bound:
 Solução: NA

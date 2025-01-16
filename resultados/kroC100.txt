@@ -1,4 +1,4 @@
-kroC100 -- 
+kroC100 -- 100
 
 Branch and bound:
 Solução: NA

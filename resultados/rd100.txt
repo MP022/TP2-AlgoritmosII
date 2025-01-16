@@ -1,4 +1,4 @@
-rd100 -- 
+rd100 -- 100
 
 Branch and bound:
 Solução: NA

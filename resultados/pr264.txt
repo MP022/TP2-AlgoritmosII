@@ -1,4 +1,4 @@
-pr264 -- 
+pr264 -- 264
 
 Branch and bound:
 Solução: NA

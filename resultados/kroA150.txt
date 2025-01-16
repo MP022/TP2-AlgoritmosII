@@ -1,4 +1,4 @@
-kroA150 -- 
+kroA150 -- 150
 
 Branch and bound:
 Solução: NA

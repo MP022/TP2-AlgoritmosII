@@ -1,4 +1,4 @@
-rd400 -- 
+rd400 -- 400
 
 Branch and bound:
 Solução: NA

@@ -1,4 +1,4 @@
-d198 -- 
+d198 -- 198
 
 Branch and bound:
 Solução: NA

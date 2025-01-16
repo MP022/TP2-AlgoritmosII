@@ -1,4 +1,4 @@
-pcb1173 -- 
+pcb1173 -- 1173
 
 Branch and bound:
 Solução: NA

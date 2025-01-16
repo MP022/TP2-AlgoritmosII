@@ -1,4 +1,4 @@
-rat575 -- 
+rat575 -- 575
 
 Branch and bound:
 Solução: NA

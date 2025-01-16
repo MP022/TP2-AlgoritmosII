@@ -1,4 +1,4 @@
-d493 -- 
+d493 -- 493
 
 Branch and bound:
 Solução: NA

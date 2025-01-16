@@ -1,4 +1,4 @@
-pr2392 -- 
+pr2392 -- 2392
 
 Branch and bound:
 Solução: NA

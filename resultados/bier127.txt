@@ -1,4 +1,4 @@
-bier127 -- 
+bier127 -- 127
 
 Branch and bound:
 Solução: NA

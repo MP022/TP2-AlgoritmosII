@@ -1,4 +1,4 @@
-d657 -- 
+d657 -- 657
 
 Branch and bound:
 Solução: NA

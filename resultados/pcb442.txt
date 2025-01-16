@@ -1,4 +1,4 @@
-pcb442 -- 
+pcb442 -- 442
 
 Branch and bound:
 Solução: NA

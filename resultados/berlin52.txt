@@ -1,4 +1,4 @@
-berlin52 -- 
+berlin52 -- 52
 
 Branch and bound:
 Solução: NA

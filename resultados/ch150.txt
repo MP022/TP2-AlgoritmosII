@@ -1,4 +1,4 @@
-ch150 -- 
+ch150 -- 150
 
 Branch and bound:
 Solução: NA

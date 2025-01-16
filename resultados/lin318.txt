@@ -1,4 +1,4 @@
-lin318 -- 
+lin318 -- 318
 
 Branch and bound:
 Solução: NA

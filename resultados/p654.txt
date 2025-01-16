@@ -1,4 +1,4 @@
-p654 -- 
+p654 -- 654
 
 Branch and bound:
 Solução: NA

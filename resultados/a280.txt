@@ -1,4 +1,4 @@
-a280 -- 
+a280 -- 280
 
 Branch and bound:
 Solução: NA

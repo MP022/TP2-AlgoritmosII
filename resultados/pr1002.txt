@@ -1,4 +1,4 @@
-pr1002 -- 
+pr1002 -- 1002
 
 Branch and bound:
 Solução: NA

@@ -1,4 +1,4 @@
-fl1400 -- 
+fl1400 -- 1400
 
 Branch and bound:
 Solução: NA
