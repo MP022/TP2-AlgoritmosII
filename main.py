@@ -2,11 +2,11 @@
 # Bibliotecas: Networkx, iGraph.
 
 import os
-from math import *
+import time
 import pandas
+from math import *
 from networkx import *
 from timeout_decorator import timeout
-import time
 
 ## Preicsa implementar: ##
 # algoritmo branch-and-bound, 
@@ -204,7 +204,7 @@ def executa_teste(arquivo: str):
     infile = open(arquivo, 'r')
 
     # le o cabeçalho
-    dimension = 8000
+    dimension = 7001
     linha = infile.readline().strip()
     nomeArqSaida = linha.split()[-1]
     while not linha.__contains__('NODE'):
@@ -362,22 +362,37 @@ infile.close()
 
 branchAndBoundDictTempo = {}
 for n in range(0, int(branchAndBoundFile.__len__()/4)):
-    branchAndBoundDictTempo[branchAndBoundFile[n*4][:-4]] = float(branchAndBoundFile[(n*4)+2].split(' ')[1][:-1])
+    branchAndBoundDictTempo[int(branchAndBoundFile[n*4].split(' ')[-1][:-1])] = float(branchAndBoundFile[(n*4)+2].split(' ')[1][:-1])
 
 twiceAroundTheTreeDictTempo = {}
 for n in range(0, int(twiceAroundTheTreeFile.__len__()/4)):
-    twiceAroundTheTreeDictTempo[twiceAroundTheTreeFile[n*4][:-4]] = float(twiceAroundTheTreeFile[(n*4)+2].split(' ')[1][:-1])
+    twiceAroundTheTreeDictTempo[int(twiceAroundTheTreeFile[n*4].split(' ')[-1][:-1])] = float(twiceAroundTheTreeFile[(n*4)+2].split(' ')[1][:-1])
 
 christofidesDictTempo = {}
 for n in range(0, int(christofidesFile.__len__()/4)):
-    christofidesDictTempo[christofidesFile[n*4][:-4]] = float(christofidesFile[(n*4)+2].split(' ')[1][:-1])
+    christofidesDictTempo[int(christofidesFile[n*4].split(' ')[-1][:-1])] = float(christofidesFile[(n*4)+2].split(' ')[1][:-1])
 
-# print(branchAndBoundDictTempo)
-# print(twiceAroundTheTreeDictTempo)
-# print(christofidesDictTempo)
+colunas = {}
+for n in range(0, int(branchAndBoundFile.__len__()/4)):
+    colunas[int(branchAndBoundFile[n*4].split(' ')[-1][:-1])] = branchAndBoundFile[n*4].split(' ')[-1][:-1]
+colunas = dict(sorted(colunas.items()))
 
-df = pandas.DataFrame({"branchAndBound": branchAndBoundDictTempo, "twiceAroundTheTree": twiceAroundTheTreeDictTempo, "christofides": christofidesDictTempo})
+df = pandas.DataFrame({"N° de cidades": colunas, "Branch and Bound": branchAndBoundDictTempo, "Twice-around-the-tree": twiceAroundTheTreeDictTempo, "Christofides": christofidesDictTempo})
 
-fig = df.plot(kind='line', figsize=(5, 3), fontsize=5).get_figure()
-fig.savefig('./test.pdf')
+fig = df.plot(title="Resultados dos testes", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), fontsize=10, color=['r', 'b', 'm']).get_figure()
+fig.savefig('./Figura1.pdf')
 
+df = pandas.DataFrame({"N° de cidades": colunas, "Branch and Bound": branchAndBoundDictTempo})
+
+fig = df.plot(title="Resultados dos testes no Branch and Bound", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), fontsize=10, color='r').get_figure()
+fig.savefig('./Figura2.pdf')
+
+df = pandas.DataFrame({"N° de cidades": colunas, "Twice-around-the-tree": twiceAroundTheTreeDictTempo})
+
+fig = df.plot(title="Resultados dos testes no Twice-around-the-tree", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), fontsize=10, color='b').get_figure()
+fig.savefig('./Figura3.pdf')
+
+df = pandas.DataFrame({"N° de cidades": colunas, "Christofides": christofidesDictTempo})
+
+fig = df.plot(title="Resultados dos testes no Christofides", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), fontsize=10, color='m').get_figure()
+fig.savefig('./Figura4.pdf')
