@@ -2,7 +2,7 @@ eil101 -- 101
 
 Branch and bound:
 Solução: NA
-Tempo: 1800.106231689453125e-06
+Tempo: 1800.106231689453125
 
 Twice around the tree:
 Solução: 832.2217964254476

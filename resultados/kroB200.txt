@@ -2,7 +2,7 @@ kroB200 -- 200
 
 Branch and bound:
 Solução: NA
-Tempo: 1800.3909759521484375e-06
+Tempo: 1800.3909759521484375
 
 Twice around the tree:
 Solução: 40710.95987899587
