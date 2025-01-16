@@ -199,7 +199,7 @@ def TSP_christofides(grafo: Graph):
 
     return melhorCusto
 
-def executa_teste(arquivo):
+def executa_teste(arquivo: str):
     # abre o arquivo
     infile = open(arquivo, 'r')
 
@@ -345,18 +345,18 @@ for i in arquivosTeste:
 gera_resultados_por_algoritmo()
 
 # TODO: Gera graficos a partir dos dados de teste
-arquivosResultados = os.listdir('./a/')
+arquivosResultados = os.listdir('./resultados/')
 if not('branchAndBound.txt' in arquivosResultados) or not('twiceAroundTheTree.txt' in arquivosResultados) or not('christofides.txt' in arquivosResultados):
     print("Resultados por algoritmos não foram gerados.")
     exit()
 
-infile = open('./a/branchAndBound.txt', 'r')
+infile = open('./resultados/branchAndBound.txt', 'r')
 branchAndBoundFile = infile.readlines()
 infile.close()
-infile = open('./a/twiceAroundTheTree.txt', 'r')
+infile = open('./resultados/twiceAroundTheTree.txt', 'r')
 twiceAroundTheTreeFile = infile.readlines()
 infile.close()
-infile = open('./a/christofides.txt', 'r')
+infile = open('./resultados/christofides.txt', 'r')
 christofidesFile = infile.readlines()
 infile.close()
 
@@ -376,8 +376,8 @@ for n in range(0, int(christofidesFile.__len__()/4)):
 # print(twiceAroundTheTreeDictTempo)
 # print(christofidesDictTempo)
 
-df = pandas.DataFrame({"twiceAroundTheTree": twiceAroundTheTreeDictTempo, "christofides": christofidesDictTempo})
+df = pandas.DataFrame({"branchAndBound": branchAndBoundDictTempo, "twiceAroundTheTree": twiceAroundTheTreeDictTempo, "christofides": christofidesDictTempo})
 
 fig = df.plot(kind='line', figsize=(5, 3), fontsize=5).get_figure()
-fig.savefig('./a/test.pdf')
+fig.savefig('./test.pdf')
 
