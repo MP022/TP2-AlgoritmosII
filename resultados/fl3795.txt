@@ -1,0 +1,13 @@
+fl3795 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1802.273017168045
+
+Twice around the tree:
+Solução: 40756.44806515285
+Tempo: 25.29270911216736
+
+Christofides:
+Solução: 31495.621235403818
+Tempo: 517.5742790699005

@@ -1,0 +1,13 @@
+pr107 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.5981686115265
+
+Twice around the tree:
+Solução: 54238.03661175547
+Tempo: 0.004734039306640625
+
+Christofides:
+Solução: 47894.18468460625
+Tempo: 0.03211569786071777

@@ -1,0 +1,13 @@
+rl1323 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.2783761024475
+
+Twice around the tree:
+Solução: 384134.4512578047
+Tempo: 1.6007792949676514
+
+Christofides:
+Solução: 294764.08609966584
+Tempo: 8.468057632446289

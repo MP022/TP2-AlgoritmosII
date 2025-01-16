@@ -1,0 +1,13 @@
+rl1889 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.429000377655
+
+Twice around the tree:
+Solução: 449335.90756593214
+Tempo: 4.19382119178772
+
+Christofides:
+Solução: 346195.0845280612
+Tempo: 25.814713716506958
