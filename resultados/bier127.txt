@@ -1,0 +1,13 @@
+bier127 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.6581304073334
+
+Twice around the tree:
+Solução: 157605.7627833088
+Tempo: 0.008420228958129883
+
+Christofides:
+Solução: 131052.5398488172
+Tempo: 0.1182255744934082

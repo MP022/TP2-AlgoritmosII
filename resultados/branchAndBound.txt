@@ -1,0 +1,60 @@
+pcb3038 --
+Solução: NA
+Tempo: 1801.770263671875
+
+pr1002 --
+Solução: NA
+Tempo: 1800.3071377277374
+
+p654 --
+Solução: NA
+Tempo: 1800.2639453411102
+
+kroB200 --
+Solução: NA
+Tempo: 0.09356021881103516
+
+eil51 --
+Solução: NA
+Tempo: 1800.7349407672882
+
+kroA200 --
+Solução: NA
+Tempo: 0.9364030361175537
+
+kroA100 --
+Solução: NA
+Tempo: 1800.6423931121826
+
+rat783 --
+Solução: NA
+Tempo: 1800.2840237617493
+
+kroD100 --
+Solução: NA
+Tempo: 1800.6240227222443
+
+d493 --
+Solução: NA
+Tempo: 1800.3006172180176
+
+eil101 --
+Solução: NA
+Tempo: 0.9213786125183105
+
+d1655 --
+Solução: NA
+Tempo: 1800.3342168331146
+
+ch130 --
+Solução: NA
+Tempo: 1800.5734856128693
+
+u1817 --
+Solução: NA
+Tempo: 1800.3687608242035
+
+fl417 --
+Solução: NA
+Tempo: 1800.3041999340057
+

@@ -1,0 +1,13 @@
+ts225 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.4078435897827
+
+Twice around the tree:
+Solução: 196979.27842963857
+Tempo: 0.02096390724182129
+
+Christofides:
+Solução: 132588.4242689587
+Tempo: 0.03253769874572754

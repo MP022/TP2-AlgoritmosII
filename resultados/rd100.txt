@@ -1,0 +1,13 @@
+rd100 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.627784729004
+
+Twice around the tree:
+Solução: 10791.655815950702
+Tempo: 0.004225015640258789
+
+Christofides:
+Solução: 8905.492431142618
+Tempo: 0.07330489158630371

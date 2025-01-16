@@ -1,0 +1,13 @@
+u2319 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.9813969135284
+
+Twice around the tree:
+Solução: 405732.6557932765
+Tempo: 5.977583885192871
+
+Christofides:
+Solução: 251829.5637451388
+Tempo: 30.765254020690918

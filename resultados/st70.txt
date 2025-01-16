@@ -1,0 +1,13 @@
+st70 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.658989906311
+
+Twice around the tree:
+Solução: 873.3514856717352
+Tempo: 0.0021495819091796875
+
+Christofides:
+Solução: 759.1621130179485
+Tempo: 0.0248563289642334

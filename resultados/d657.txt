@@ -1,0 +1,13 @@
+d657 -- 
+
+Branch and bound:
+Solução: NA
+Tempo: 1800.2678747177124
+
+Twice around the tree:
+Solução: 65730.19370040316
+Tempo: 0.18867874145507812
+
+Christofides:
+Solução: 54738.296289833816
+Tempo: 7.139181613922119
