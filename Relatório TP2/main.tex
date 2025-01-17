@@ -17,6 +17,7 @@
 \usepackage{sbc-template}
 
 \usepackage{graphicx,url}
+\usepackage{hyperref}
 
 %\usepackage[brazil]{babel}   
 \usepackage[utf8]{inputenc}  
@@ -40,178 +41,102 @@
 \maketitle
 
 \begin{abstract}
-  This meta-paper describes the style to be used in articles and short papers
-  for SBC conferences. For papers in English, you should add just an abstract
-  while for the papers in Portuguese, we also ask for an abstract in
-  Portuguese (``resumo''). In both cases, abstracts should not have more than
-  10 lines and must be in the first page of the paper.
+  This work aimed to investigate and compare the performance of different algorithms for solving the traveling salesman problem. Three algorithms were implemented and analyzed: Branch and Bound, Twice-around-the-tree, and Christofides. The results obtained demonstrate that the Branch and Bound algorithm, although exact, exhibits a high computational cost. On the other hand, the probabilistic algorithms Twice-around-the-tree and Christofides proved to be more efficient in terms of execution time, providing approximate solutions much faster. The Christofides algorithm exhibited better performance in terms of solution quality, and the Twice-around-the-tree algorithm stood out for its speed.
 \end{abstract}
      
 \begin{resumo} 
-  Este meta-artigo descreve o estilo a ser usado na confecção de artigos e
-  resumos de artigos para publicação nos anais das conferências organizadas
-  pela SBC. É solicitada a escrita de resumo e abstract apenas para os artigos
-  escritos em português. Artigos em inglês deverão apresentar apenas abstract.
-  Nos dois casos, o autor deve tomar cuidado para que o resumo (e o abstract)
-  não ultrapassem 10 linhas cada, sendo que ambos devem estar na primeira
-  página do artigo.
+  Este trabalho teve como objetivo investigar e comparar o desempenho de diferentes algoritmos para resolver o problema do caixeiro viajante. Foram implementados e analisados três algoritmos: Branch and Bound, Twice-around-the-tree e Christofides. Os resultados obtidos demonstram que o algoritmo Branch and Bound, embora seja exato, apresenta um custo computacional elevado. Por outro lado, os algoritmos probabilísticos Twice-around-the-tree e Christofides se mostraram mais eficientes em termos de tempo de execução, fornecendo soluções aproximadas muito mais rapidamente. O algoritmo Christofides apresentou um melhor desempenho em termos de qualidade da solução, e o algoritmo Twice-around-the-tree se destacou pela sua rapidez.
 \end{resumo}
 
 
 \section{Introdução}
 
-Lorem Ipson
+Esse trabalho apresenta uma análise comparativa de diferentes algoritmos que resolvem o problema do caixeiro viajante. O problema do caixeiro viajante é um problema de otimização NP-difícil, ou seja, encontrar uma solução exata é muito custoso computacionalmente, podendo levar milhares de anos a depender do tamanho da instância do problema. 
+
+Foram implementados e comparados três algoritmos representativos que são o Branch and Bound, Twice-around-the-tree e Christofides. O algoritmo Branch and Bound é um algoritmo exato baseado em busca em árvore, enquanto os algoritmos Twice-around-the-tree e Christofides são probabilísticos e fornecem soluções aproximadas.
+
+O trabalho está organizado da seguinte forma: na primeira seção, é apresentado o problema do caixeiro viajante e a relevância de sua solução. Em seguida, são descritos os algoritmos implementados, detalhando suas principais características e a lógica implementada. Na sequência, são apresentados os resultados obtidos com os testes, comparando o desempenho dos algoritmos em termos de tempo de execução e qualidade das soluções. Por fim, são discutidas as principais conclusões resultantes do trabalho.
 
 \section{Conceitos Básicos}
 
-O problema do caixeiro viajante foi apresentado por Anany Levitin em seu livro chamado "Introduction to The Design and Analysis of Algorithms". A sucinta definição trazida foi a de encontrar encontrar a menor rota possível passando por N cidades, apenas uma vez por cidade, e depois retornando para a cidade de origem. Esse problema é classificado como  NP-Difícil, portanto ele pode ser resolvido em tempo polinomial por uma máquina de Turing não deterministica. Isso significa que os computadores atuais não são capazes que encontrar a uma solução para esse problema em tempo hábil. Por isso, são precisos algoritmos mais complexos para encontrar uma solução mais rápida. Para este trabalho serão implementados três algoritmos que resolvem esse problema. O primeiro algoritmo implementado usa o Branch and Bound, o segundo é o algoritmo aproximativo Twice-around-the-tree e o terceiro é o algoritmo aproximativo Christofides. Toda a definição das implementações foram retiradas do livro "Introduction to The Design and Analysis of Algorithms".
+O problema do caixeiro viajante foi apresentado por Anany Levitin em seu livro chamado "Introduction to The Design and Analysis of Algorithms". A sucinta definição do problema trazida foi a de encontrar a menor rota possível passando por N cidades, apenas uma vez por cidade, e depois retornando para a cidade de origem. Esse problema é classificado como  NP-Difícil, portanto ele pode ser resolvido em tempo polinomial por uma máquina de Turing não determinística. Isso significa que os computadores atuais não são capazes de encontrar uma solução para esse problema em tempo hábil. Por isso, são precisos algoritmos mais complexos para encontrar uma solução mais rapidamente. Para este trabalho serão implementados três algoritmos que resolvem esse problema. O primeiro algoritmo é o Branch and Bound, o segundo é o algoritmo aproximativo Twice-around-the-tree e o terceiro é o algoritmo aproximativo Christofides. Toda a definição das implementações foram retiradas do livro "Introduction to The Design and Analysis of Algorithms".
 
 \section{Implementação}
 
-A implementação dos três algoritmos foi feita em um mesmo arquivos na linguagem de programação chamada python. Foram usadas as bibliotecas math e networkx para a implementação dos algoritmos. As bibliotecas os e timeout\_decorator foram usadas durante os teste para automatizar a execução dos teste e limitar o tempo de execução de cada algoritmo respectivamente. Já as bibliotecas <incluir> foram usadas para gerar as tabelas e os resultados para serem analisados.
+A implementação dos três algoritmos foi feita em um mesmo arquivo na linguagem de programação python. Foram usadas as bibliotecas math e networkx para a implementação dos algoritmos. As bibliotecas os e timeout\_decorator foram usados durante os testes para automatizar a execução dos testes e limitar o tempo de execução de cada algoritmo respectivamente. Já as bibliotecas matplotlib e pandas foram usadas para gerar as tabelas e os resultados para serem analisados.
 
-Os três altoritmos terão as suas implemenações detalhadas a seguir:
+Os três algoritmos terão as suas implementações detalhadas a seguir:
 
 \subsection{Branch and Bound}
 
-Para a implementação desse algoritmo a estrutura de dados Graph disponibilizada pela biblioteca networkx foi utilizada, além de alguns métodos auxiliares que foram implementados a parte e estão contidos no mesmo arquivo dos demais algoritmos.
+Para a implementação desse algoritmo a estrutura de dados Graph disponibilizada pela biblioteca networkx foi utilizada, além de alguns métodos auxiliares que foram implementados à parte e estão contidos no mesmo arquivo dos demais algoritmos.
 
-Para ser um algoritmo Branch and Bound é preciso ter o calculo de uma estimativa que seja realista e proxima ao valor otimo. O calculo da estimativa que foi implementado foi o mesmo descrito pro Levitin no livro "Introduction to The Design and Analysis of Algorithms". Em resumo, a estimativa é a soma das duas arestas de menor custo de todos os nós do grafo divida por dois. Quando uma aresta é introduzida na possivel solução ela é considerada como uma das menores arestas dos nós que ela liga. E isso garante que a estimativa de uma provavel solução parcial seja realista.
+Para ser um algoritmo Branch and Bound é preciso ter o cálculo de uma estimativa que seja realista e próxima ao valor ótimo. O cálculo da estimativa que foi implementado foi o mesmo descrito por Levitin no livro "Introduction to The Design and Analysis of Algorithms". Em resumo, a estimativa é a soma das duas arestas de menor custo de todos os nós do grafo divido por dois. Quando uma aresta é introduzida na possível solução ela é considerada como uma das menores arestas dos nós que ela liga. E isso garante que a estimativa seja realista.
 
-A arvoré de soluções possiveis é armazenada como uma fila de prioridade onde a prioridade é da solução que possui a menor estimativa. Ou seja, para avançar na arvoré de soluções possiveis é usada a busca em largura, escolhendo sempre a solução com menor estimativa e não a que esteja mais profunda na árvore.
+A árvore de soluções possíveis é armazenada como uma fila de prioridades onde a solução que possui a menor estimativa tem a maior prioridade. Ou seja, para avançar na árvore de soluções possíveis é usada a busca em largura, escolhendo sempre a solução com menor estimativa e não a que esteja mais profunda na árvore.
 
 \subsection{Twice-around-the-tree}
 
 Para a implementação desse algoritmo a estrutura de dados Graph e os algoritmos minimum\_spanning\_tree e dfs\_preorder\_nodes que são disponibilizados pela biblioteca networkx foram utilizados.
 
-A implementação desse algoritmo foi feita como é descrita no livro "Introduction to The Design and Analysis of Algorithms". São três passos a serem feitos, primeiro calcular a árvore geradora minima para o grafo da instancia do problema, segundo passo é definir a lista de vertices da arvores geradora minima a partir de visitação preorder dos vertices e terceiro e ultimo passo retirar do lista de vertices os vertices repetidos encontrando o ciclo hamiltoniano do grafo que é a solução para o problema.
+A implementação desse algoritmo foi feita como é descrita no livro "Introduction to The Design and Analysis of Algorithms". São três passos a serem feitos, o primeiro é calcular a árvore geradora mínima para o grafo da instância do problema, o segundo passo é definir a lista de vértices da árvores geradora mínima a partir de visitação preorder dos vértices e o terceiro e último passo é retirar da lista de vértices os que estão repetidos, encontrando o ciclo hamiltoniano do grafo, que é a solução para o problema.
 
 \subsection{Christofides}
 
 Para a implementação desse algoritmo a estrutura de dados Graph e os algoritmos minimum\_spanning\_tree, min\_weight\_matching e eulerian\_circuit que são disponibilizados pela biblioteca networkx foram utilizados, além de um método auxiliar que foi implementado a parte e está contido no mesmo arquivo dos demais algoritmos.
 
-A implementação desse algoritmo foi feita como é descrita no livro "Introduction to The Design and Analysis of Algorithms". Essa implementação é semelhante a do algoritmo Twice-around-the-tree porém com algumas alterações. Primeiro é necessario encontrar a arvore geradora minima e depois gerar uma lista de nós da arvore geradora minima que possuem grau impar. Dentro do subgrafo induzido pelos nós de grau impar da arvore geradora minima é encontrado o matching perfeito de peso minimo. Com isso será criado um grafo auxiliar que adiciona na arvore geradona minima todas as arestas do matching perfeito de peso minimo. Nesse grafo auxiliar é calculado o circuito euleriano e com a lista de vertices do circuito euleriano basta retirar os vertices repetidos e encontraremos o circuito hamiltoniano que é a solução para o problema.
+A implementação desse algoritmo foi feita como é descrita no livro "Introduction to The Design and Analysis of Algorithms". Essa implementação é semelhante a do algoritmo Twice-around-the-tree porém com algumas alterações. Primeiro é necessário encontrar a árvore geradora mínima e depois gerar uma lista de nós da árvore geradora mínima que possuem grau ímpar. Dentro do subgrafo induzido pelos nós de grau ímpar é encontrado o matching perfeito de peso mínimo. Com isso será criado um grafo auxiliar que adiciona na árvore geradora mínima todas as arestas do matching perfeito de peso mínimo. Nesse grafo auxiliar é calculado o circuito euleriano e com a lista de vértices do circuito euleriano basta retirar os vértices repetidos e encontraremos o circuito hamiltoniano que é a solução para o problema.
 
 \section{Testes}
 
-Os algoritmos implementados foram testados a partir das intancias contidas no site \url{http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/}. Dentre todas as instancias disponiveis apenas as euclidianas com 2 dimenões e instancias do caxeiro viajante foram usadas, totalizando 77 testes. Desses testes 5 que possuem mais do que 7000 nós não puderam ser executados, pois o computador utilizado para executar os testes trava e não termina os testes com essa quantia de nós.
+Os algoritmos implementados foram testados usando as intâncias contidas no site \href{http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/}{http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/}. Dentre todas as instâncias disponíveis apenas as euclidianas com 2 dimensões foram usadas, totalizando 77 instâncias. Desses testes, existem 5 que possuem mais do que 7000 cidades e não puderam ser executados, pois o computador utilizado não possui poder computacional o suficiente para terminar esses testes, que causaram travamentos e a reinicialização do computador. Portanto, foram executadas 72 instâncias do problema, e cada instância foi executada uma vez em cada algoritmo implementado. Cada algoritmo possui um limite de 30 minutos para encontrar uma solução, caso o algoritmo não tivesse parado de executar nesse limite de tempo ele era interrompido e o resultado ficava como NA (não-disponível).
 
 \subsection{Resultados}
 
-Lorem Ipson
+O resultado dos testes (Figura \ref{fig:fig1}) mostram como o aumento do número de cidades teve uma influência no aumento do tempo gasto executando os algoritmos. O algoritmo de Branch and Bound não possui variação, pois não conseguiu terminar nenhuma das instâncias antes do limite do tempo. Podemos ver que o algoritmo mais afetado pelo aumento do número de cidades foi o algoritmo de Christofides, chegando a não concluir a execução de uma instância.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.8\textwidth]{../Figura1.pdf}
+\caption{Tabela com os resultados de todos algoritmos}
+\label{fig:fig1}
+\end{figure}
+
+O algoritmo Branch and Bound não encontrou a solução de nenhum dos testes devido a sua grande complexidade de execução, que nos piores casos pode ser equivalente a uma solução ingênua de força bruta.
+
+O algoritmo Twice-around-the-tree encontrou uma solução para todas as instâncias em tempo inferior a 90 segundos (Figura \ref{fig:fig2}). Mostrando ser uma excelente opção quando é preciso de uma solução rápida e que não precisa ser exata para o problema do caixeiro viajante.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.6\textwidth]{../Figura2.pdf}
+\caption{Tabela com os resultados do Twice-around-the-tree}
+\label{fig:fig2}
+\end{figure}
+
+O algoritmo Christofides encontrou a solução para 71 das 72 instâncias que foram testadas no tempo definido. Ele possui uma maior variação do tempo de execução, porém ele traz soluções mais próximas da ótima.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=.8\textwidth]{../Figura3.pdf}
+\caption{Tabela com a comparação do resultado dos testes}
+\label{fig:fig3}
+\end{figure}
+
+Comparando os resultados obtidos nos testes com os melhores resultados (Figura \ref{fig:fig3}) disponibilizados pelo \href{http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/}{site}, podemos observar que os algoritmos encontram soluções proximas as melhores. O algoritmo Twice-around-the-tree encontrou as soluções mais distantes das melhores, isso é o esperado já que a taxa de aproximação desse algoritmo é de no máximo duas vezes a solução ótima. O algoritmo de Christofides, que encontrou as soluções mais próximas às melhores, tem o resultado esperado já que posuui uma taxa de aproximação de no máximo um em meio da solução ótima. O custo do algoritmo de Christofides para encontrar uma solução mais próxima da melhor é ter um maior custo computacional e por isso ele possui um maior tempo de execução que o algoritmo Twice-around-the-tree. 
 
 \section{Conclusão}
 
-Lorem Ipson
+Neste trabalho, foram implementados e comparados três algoritmos que resolvem o problema do caixeiro viajante e eles são: Branch and Bound, Twice-around-the-tree e Christofides. Os resultados obtidos demonstram que o algoritmo Branch and Bound, apesar de sua exatidão, apresenta um custo computacional tão grande que nenhuma das instâncias testadas teve uma solução encontrada dentro do tempo limite estabelecido. Por outro lado, os algoritmos probabilísticos Twice-around-the-tree e Christofides apresentaram um desempenho superior em termos de tempo de execução, fornecendo soluções aproximadas relativamente rápido.
 
+O algoritmo de Christofides se mostrou mais preciso, porém com um custo computacional maior. O algoritmo Twice-around-the-tree se destacou pela sua rapidez, sendo uma opção para aplicações que exigem soluções rápidas, mesmo que não sejam ótimas.
 
-\section{General Information}
+Com esses resultados é possível compreender as características e limitações de cada algoritmo, auxiliando na escolha da melhor abordagem para diferentes cenários práticos.
 
-All full papers and posters (short papers) submitted to some SBC conference,
-including any supporting documents, should be written in English or in
-Portuguese. The format paper should be A4 with single column, 3.5 cm for upper
-margin, 2.5 cm for bottom margin and 3.0 cm for lateral margins, without
-headers or footers. The main font must be Times, 12 point nominal size, with 6
-points of space before each paragraph. Page numbers must be suppressed.
+\begin{thebibliography}{1}
 
-Full papers must respect the page limits defined by the conference.
-Conferences that publish just abstracts ask for \textbf{one}-page texts.
+\bibitem{christofides} 
+    \textit{Introduction to the design \& analysis of algorithms}. Disponível em: \url{https://homel.vsb.cz/~fai0013/Kniha_Algoritmy.pdf}. Acesso em: 16 jan. 2025.
 
-\section{First Page} \label{sec:firstpage}
-
-The first page must display the paper title, the name and address of the
-authors, the abstract in English and ``resumo'' in Portuguese (``resumos'' are
-required only for papers written in Portuguese). The title must be centered
-over the whole page, in 16 point boldface font and with 12 points of space
-before itself. Author names must be centered in 12 point font, bold, all of
-them disposed in the same line, separated by commas and with 12 points of
-space after the title. Addresses must be centered in 12 point font, also with
-12 points of space after the authors' names. E-mail addresses should be
-written using font Courier New, 10 point nominal size, with 6 points of space
-before and 6 points of space after.
-
-The abstract and ``resumo'' (if is the case) must be in 12 point Times font,
-indented 0.8cm on both sides. The word \textbf{Abstract} and \textbf{Resumo},
-should be written in boldface and must precede the text.
-
-\section{CD-ROMs and Printed Proceedings}
-
-In some conferences, the papers are published on CD-ROM while only the
-abstract is published in the printed Proceedings. In this case, authors are
-invited to prepare two final versions of the paper. One, complete, to be
-published on the CD and the other, containing only the first page, with
-abstract and ``resumo'' (for papers in Portuguese).
-
-\section{Sections and Paragraphs}
-
-Section titles must be in boldface, 13pt, flush left. There should be an extra
-12 pt of space before each title. Section numbering is optional. The first
-paragraph of each section should not be indented, while the first lines of
-subsequent paragraphs should be indented by 1.27 cm.
-
-\subsection{Subsections}
-
-The subsection titles must be in boldface, 12pt, flush left.
-
-\section{Figures and Captions}\label{sec:figs}
-
-
-Figure and table captions should be centered if less than one line
-(Figure~\ref{fig:exampleFig1}), otherwise justified and indented by 0.8cm on
-both margins, as shown in Figure~\ref{fig:exampleFig2}. The caption font must
-be Helvetica, 10 point, boldface, with 6 points of space before and after each
-caption.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.5\textwidth]{fig1.jpg}
-\caption{A typical figure}
-\label{fig:exampleFig1}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.3\textwidth]{fig2.jpg}
-\caption{This figure is an example of a figure caption taking more than one
-  line and justified considering margins mentioned in Section~\ref{sec:figs}.}
-\label{fig:exampleFig2}
-\end{figure}
-
-In tables, try to avoid the use of colored or shaded backgrounds, and avoid
-thick, doubled, or unnecessary framing lines. When reporting empirical data,
-do not use more decimal digits than warranted by their precision and
-reproducibility. Table caption must be placed before the table (see Table 1)
-and the font used must also be Helvetica, 10 point, boldface, with 6 points of
-space before and after each caption.
-
-\begin{table}[ht]
-\centering
-\caption{Variables to be considered on the evaluation of interaction
-  techniques}
-\label{tab:exTable1}
-\includegraphics[width=.7\textwidth]{table.jpg}
-\end{table}
-
-\section{Images}
-
-All images and illustrations should be in black-and-white, or gray tones,
-excepting for the papers that will be electronically available (on CD-ROMs,
-internet, etc.). The image resolution on paper should be about 600 dpi for
-black-and-white images, and 150-300 dpi for grayscale images.  Do not include
-images with excessive resolution, as they may take hours to print, without any
-visible difference in the result. 
-
-\section{References}
-
-Bibliographic references must be unambiguous and uniform.  We recommend giving
-the author names references in brackets, e.g. \cite{knuth:84},
-\cite{boulic:91}, and \cite{smith:99}.
-
-The references must be listed using 12 point font size, with 6 points of space
-before each reference. The first line of each reference should not be
-indented, while the subsequent should be indented by 0.5 cm.
-
-\bibliographystyle{sbc}
-\bibliography{sbc-template}
+\end{thebibliography}
 
 \end{document}
