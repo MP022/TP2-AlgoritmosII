@@ -5,7 +5,7 @@ Trabalho Prático 2 – Soluções para problemas difíceis Objetivos Nesse trab
 
 > python3 -m virtualenv ./venv/
 
-caso precise intalar o cirtual env
+caso precise instalar o virtualenv
 
 > python3 -m pip install --user virtualenv --break-system-packages
 
