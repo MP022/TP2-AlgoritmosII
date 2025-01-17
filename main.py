@@ -1,21 +1,10 @@
-# Padrão: Anaconda 22.9 e/ou Python +3.9 com NumPy, SciPy e Pandas.
-# Bibliotecas: Networkx, iGraph.
-
 import os
 import time
 import pandas
 from math import *
 from networkx import *
+import matplotlib.pyplot as plt
 from timeout_decorator import timeout
-
-## Preicsa implementar: ##
-# algoritmo branch-and-bound, 
-# algoritmo twice-around-the-tree, 
-# algoritmo de Christofides 
-## para solucionar o problema do caixeiro viajante geométrico. ##
-
-# deverão avaliar o desempenho dos algoritmos segundo três aspectos: tempo, espaço, e qualidade da solução.
-# tempo de processamento deve ser limitado a 30min. dados referentes à execução colocados como NA (não-disponível).
 
 def dist(a: tuple, b: tuple) -> int:
     return sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1]))
@@ -55,7 +44,6 @@ def insere_decres_list(list: list[dict[str, any]], item: any, valOrdem: str):
 
 @timeout(seconds=1800)
 def TSP_branch_and_Bound(grafo: Graph):
-    # TODO: ALTERAR A ESTIMATIVA PRA TIRAR AS COPIAS DE GRAFOS E DIMINUIR O PROCESSAMENTOS DE __len__ OU QUALQUER OUTRA COISA QUE DER
     def estimativa(grafoEst: Graph, caminho: list) -> int:
         est: int = 0
         menor1 = menor2 = 0
@@ -168,9 +156,6 @@ def TSP_christofides(grafo: Graph):
     for n in filter(no_grau_impar, arvore):
         nosImpares.append(n)
 
-    # print(arvore.degree)
-    # print(nosImpares)
-
     I.add_nodes_from(nosImpares)
 
     for u in nosImpares:
@@ -180,7 +165,6 @@ def TSP_christofides(grafo: Graph):
                 I[u][v]['weight'] = dist(grafo.nodes[u]['coord'], grafo.nodes[v]['coord'])
 
     match = list(min_weight_matching(I))
-    # print(match)
     for aresta in range(0, match.__len__()):
         u, v = match[aresta]
         match[aresta] = (u, v, {'weight': grafo[u][v]['weight']})
@@ -283,6 +267,10 @@ def gera_resultados_por_algoritmo():
         arquivosResultados.remove('christofides.txt')
     except:
         not True
+    try:
+        arquivosResultados.remove('melhoresResultados.txt')
+    except:
+        not True
 
     branchAndBound = ''
     twiceAroundTheTree = ''
@@ -344,7 +332,6 @@ for i in arquivosTeste:
 
 gera_resultados_por_algoritmo()
 
-# TODO: Gera graficos a partir dos dados de teste
 arquivosResultados = os.listdir('./resultados/')
 if not('branchAndBound.txt' in arquivosResultados) or not('twiceAroundTheTree.txt' in arquivosResultados) or not('christofides.txt' in arquivosResultados):
     print("Resultados por algoritmos não foram gerados.")
@@ -364,35 +351,55 @@ branchAndBoundDictTempo = {}
 for n in range(0, int(branchAndBoundFile.__len__()/4)):
     branchAndBoundDictTempo[int(branchAndBoundFile[n*4].split(' ')[-1][:-1])] = float(branchAndBoundFile[(n*4)+2].split(' ')[1][:-1])
 
-twiceAroundTheTreeDictTempo = {}
+twiceAroundTheTreeDictResultado = {}
 for n in range(0, int(twiceAroundTheTreeFile.__len__()/4)):
-    twiceAroundTheTreeDictTempo[int(twiceAroundTheTreeFile[n*4].split(' ')[-1][:-1])] = float(twiceAroundTheTreeFile[(n*4)+2].split(' ')[1][:-1])
+    twiceAroundTheTreeDictResultado[int(twiceAroundTheTreeFile[n*4].split(' ')[-1][:-1])] = float(twiceAroundTheTreeFile[(n*4)+2].split(' ')[1][:-1])
 
-christofidesDictTempo = {}
+christofidesDictResultado = {}
 for n in range(0, int(christofidesFile.__len__()/4)):
-    christofidesDictTempo[int(christofidesFile[n*4].split(' ')[-1][:-1])] = float(christofidesFile[(n*4)+2].split(' ')[1][:-1])
+    christofidesDictResultado[int(christofidesFile[n*4].split(' ')[-1][:-1])] = float(christofidesFile[(n*4)+2].split(' ')[1][:-1])
 
-colunas = {}
+listaQuantCidades = {}
 for n in range(0, int(branchAndBoundFile.__len__()/4)):
-    colunas[int(branchAndBoundFile[n*4].split(' ')[-1][:-1])] = branchAndBoundFile[n*4].split(' ')[-1][:-1]
-colunas = dict(sorted(colunas.items()))
+    listaQuantCidades[int(branchAndBoundFile[n*4].split(' ')[-1][:-1])] = branchAndBoundFile[n*4].split(' ')[0]
+listaQuantCidades = dict(sorted(listaQuantCidades.items()))
 
-df = pandas.DataFrame({"N° de cidades": colunas, "Branch and Bound": branchAndBoundDictTempo, "Twice-around-the-tree": twiceAroundTheTreeDictTempo, "Christofides": christofidesDictTempo})
+df = pandas.DataFrame({"N° de cidades": listaQuantCidades, "Branch and Bound": branchAndBoundDictTempo, "Twice-around-the-tree": twiceAroundTheTreeDictResultado, "Christofides": christofidesDictResultado})
 
-fig = df.plot(title="Resultados dos testes", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), fontsize=10, color=['r', 'b', 'm']).get_figure()
+fig = df.plot(title="Resultados dos testes", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), color=['r', 'b', 'm'], marker = 'o').get_figure()
 fig.savefig('./Figura1.pdf')
 
-df = pandas.DataFrame({"N° de cidades": colunas, "Branch and Bound": branchAndBoundDictTempo})
+df = pandas.DataFrame({"N° de cidades": listaQuantCidades, "Twice-around-the-tree": twiceAroundTheTreeDictResultado})
 
-fig = df.plot(title="Resultados dos testes no Branch and Bound", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), fontsize=10, color='r').get_figure()
+fig = df.plot(title="Resultados dos testes no Twice-around-the-tree", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), color='b', marker = 'o').get_figure()
 fig.savefig('./Figura2.pdf')
 
-df = pandas.DataFrame({"N° de cidades": colunas, "Twice-around-the-tree": twiceAroundTheTreeDictTempo})
+infile = open('./resultados/melhoresResultados.txt', 'r')
+melhoresResultadosFile = infile.readlines()
+infile.close()
 
-fig = df.plot(title="Resultados dos testes no Twice-around-the-tree", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), fontsize=10, color='b').get_figure()
+melhoresResultadosDictResultado = {}
+for n in range(0, int(melhoresResultadosFile.__len__())):
+    melhoresResultadosDictResultado[melhoresResultadosFile[n].split(' ')[0]] = float(melhoresResultadosFile[n].split(' ')[-1][:-1])
+
+twiceAroundTheTreeDictResultado = {}
+for n in range(0, int(twiceAroundTheTreeFile.__len__()/4)):
+    twiceAroundTheTreeDictResultado[twiceAroundTheTreeFile[n*4].split(' ')[0]] = float(twiceAroundTheTreeFile[(n*4)+1].split(' ')[1][:-1])
+
+christofidesDictResultado = {}
+for n in range(0, int(christofidesFile.__len__()/4)):
+    if christofidesFile[(n*4)+1].split(' ')[1][:-1] != 'NA':
+        christofidesDictResultado[christofidesFile[n*4].split(' ')[0]] = float(christofidesFile[(n*4)+1].split(' ')[1][:-1])
+    else:
+        christofidesDictResultado[christofidesFile[n*4].split(' ')[0]] = 0
+
+listaNomeTeste = {}
+for n in range(0, int(branchAndBoundFile.__len__()/4)):
+    listaNomeTeste[int(branchAndBoundFile[n*4].split(' ')[-1][:-1])] = branchAndBoundFile[n*4].split(' ')[0]
+listaNomeTeste = dict(sorted(listaNomeTeste.items()))
+print(twiceAroundTheTreeDictResultado)
+
+df = pandas.DataFrame({"Nome do teste": listaNomeTeste, "Melhor Resultado": melhoresResultadosDictResultado, "Twice-around-the-tree": twiceAroundTheTreeDictResultado, "Christofides": christofidesDictResultado})
+
+fig = df.plot(title="Resultados dos testes", x="Nome do teste", ylabel="Distancia do resultado", kind='line', figsize=(10, 7), color=['r', 'b', 'm'], marker = 'o').get_figure()
 fig.savefig('./Figura3.pdf')
-
-df = pandas.DataFrame({"N° de cidades": colunas, "Christofides": christofidesDictTempo})
-
-fig = df.plot(title="Resultados dos testes no Christofides", x="N° de cidades", ylabel="N° de segundos", kind='line', figsize=(10, 7), fontsize=10, color='m').get_figure()
-fig.savefig('./Figura4.pdf')
